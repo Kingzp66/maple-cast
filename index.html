@@ -52,6 +52,8 @@
     .product strong { display: block; min-height: 38px; font-size: 14px; line-height: 1.35; text-transform: uppercase; }
     .price { margin: 8px 0 12px; color: #e30613; font-size: 17px; font-weight: 900; }
     .quick { height: 38px; display: grid; place-items: center; background: #111; color: #fff; font-size: 12px; font-weight: 900; text-transform: uppercase; }
+    .pay-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .quick.paypal { background: #fff; color: #111; border: 1px solid #111; }
     .story { display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: center; background: #fff; border: 1px solid #dcdcd4; padding: 24px; }
     .story img { width: 100%; display: block; border: 1px solid #e5e5de; }
     .story h2 { margin: 0 0 12px; font-size: 34px; line-height: 1; text-transform: uppercase; }
@@ -69,70 +71,14 @@
 <body>
   <div class="notice">Simple path to purchase: shop jigs, ice fishing, micro lures, metal lures, and accessories</div>
   <header>
-    <div class="brand-line">
-      <img src="assets/logo.jpg" alt="Maple Cast logo">
-      <h1>Maple Cast</h1>
-      <p>Fishing tackle built for anglers, made to perform</p>
-    </div>
-    <nav aria-label="Primary navigation">
-      <a href="#">Home</a>
-      <a href="#shop">Shop</a>
-      <a href="#jigs">Jigs</a>
-      <a href="#ice-fishing">Ice Fishing</a>
-      <a href="#micro-lures">Micro Lures</a>
-      <a href="#metal-lures">Metal Lures</a>
-      <a href="#accessories">Accessories</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="brand-line"><img src="assets/logo.jpg" alt="Maple Cast logo"><h1>Maple Cast</h1><p>Fishing tackle built for anglers, made to perform</p></div>
+    <nav aria-label="Primary navigation"><a href="#">Home</a><a href="#shop">Shop</a><a href="#jigs">Jigs</a><a href="#ice-fishing">Ice Fishing</a><a href="#micro-lures">Micro Lures</a><a href="#metal-lures">Metal Lures</a><a href="#accessories">Accessories</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   </header>
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">New season tackle</div>
-      <h2>Pick the right lure faster</h2>
-      <p>Shop a focused Maple Cast lineup built around clear buying paths: jigs, ice fishing, micro lures, metal lures, and fishing accessories.</p>
-      <div class="buttons">
-        <a class="btn" href="#shop">Shop Best Sellers</a>
-        <a class="btn light" href="#ice-fishing">Shop Ice Fishing</a>
-      </div>
-    </div>
-    <div class="hero-image" aria-label="Fishing new arrivals banner"></div>
-  </section>
-  <section class="shop-paths" id="shop">
-    <article class="path" id="jigs"><h3>Jigs</h3><p>Cold water and finesse-ready profiles for bass, pike, and multi-species fishing.</p><span>Shop jigs</span></article>
-    <article class="path" id="ice-fishing"><h3>Ice Fishing</h3><p>Winter-ready tackle selections for anglers who need fast, simple product choices.</p><span>Shop ice fishing</span></article>
-    <article class="path" id="micro-lures"><h3>Micro Lures</h3><p>Small presentations for crappie, panfish, trout, and tough bite conditions.</p><span>Shop micro lures</span></article>
-    <article class="path" id="metal-lures"><h3>Metal Lures</h3><p>Spoons, blades, and metal bait profiles for flash, vibration, and reaction bites.</p><span>Shop metal lures</span></article>
-  </section>
-  <section class="section">
-    <div class="section-head"><h2>Featured Products</h2><a href="#shop">Shop all tackle</a></div>
-    <div class="products">
-      <article class="product"><div class="product-image"></div><div class="product-body"><strong>Maple Cast Hair Jig Pack</strong><div class="price">$19.99</div><a class="quick" href="#contact">Add to cart</a></div></article>
-      <article class="product"><div class="product-image"></div><div class="product-body"><strong>Ice Fishing Starter Set</strong><div class="price">$14.99</div><a class="quick" href="#contact">Select options</a></div></article>
-      <article class="product"><div class="product-image"></div><div class="product-body"><strong>Micro Lure Panfish Pack</strong><div class="price">$9.99</div><a class="quick" href="#contact">Add to cart</a></div></article>
-      <article class="product"><div class="product-image"></div><div class="product-body"><strong>Metal Spoon Bundle</strong><div class="price">$24.99</div><a class="quick" href="#contact">View bundle</a></div></article>
-    </div>
-  </section>
-  <section class="section" id="about">
-    <div class="story">
-      <img src="assets/wrap.jpg" alt="Maple Cast packaging">
-      <div>
-        <div class="eyebrow">Quality, performance, reliability</div>
-        <h2>Brand trust without slowing the sale</h2>
-        <p>Maple Cast presents a clean buying path while still showing the packaging, logo, and product feel customers need to trust the brand.</p>
-        <div class="buttons"><a class="btn" href="#about">About Maple Cast</a><a class="btn light" href="#contact">Contact Wholesale</a></div>
-      </div>
-    </div>
-  </section>
-  <section class="section" id="accessories">
-    <div class="section-head"><h2>Quick Questions</h2><a href="#contact">Contact us</a></div>
-    <div class="faq">
-      <details open><summary>Which lure should I start with?</summary><p>Start with a featured jig pack or ice fishing starter set if you want a simple setup for testing water clarity, depth, and bite conditions.</p></details>
-      <details><summary>Do you sell accessories?</summary><p>Yes. Accessories can include terminal tackle, boxes, hooks, snaps, and other support gear for lure fishing.</p></details>
-      <details><summary>Where do products ship from?</summary><p>This area can be updated with your real fulfillment location and shipping policy once the store details are ready.</p></details>
-      <details><summary>Can I shop by species?</summary><p>Yes. The homepage can route shoppers by target species, such as bass, pike, trout, crappie, and panfish.</p></details>
-    </div>
-  </section>
+  <section class="hero"><div class="hero-copy"><div class="eyebrow">New season tackle</div><h2>Pick the right lure faster</h2><p>Shop a focused Maple Cast lineup built around clear buying paths: jigs, ice fishing, micro lures, metal lures, and fishing accessories.</p><div class="buttons"><a class="btn" href="#shop">Shop Best Sellers</a><a class="btn light" href="#ice-fishing">Shop Ice Fishing</a></div></div><div class="hero-image" aria-label="Fishing new arrivals banner"></div></section>
+  <section class="shop-paths" id="shop"><article class="path" id="jigs"><h3>Jigs</h3><p>Cold water and finesse-ready profiles for bass, pike, and multi-species fishing.</p><span>Shop jigs</span></article><article class="path" id="ice-fishing"><h3>Ice Fishing</h3><p>Winter-ready tackle selections for anglers who need fast, simple product choices.</p><span>Shop ice fishing</span></article><article class="path" id="micro-lures"><h3>Micro Lures</h3><p>Small presentations for crappie, panfish, trout, and tough bite conditions.</p><span>Shop micro lures</span></article><article class="path" id="metal-lures"><h3>Metal Lures</h3><p>Spoons, blades, and metal bait profiles for flash, vibration, and reaction bites.</p><span>Shop metal lures</span></article></section>
+  <section class="section"><div class="section-head"><h2>Featured Products</h2><a href="#shop">Shop all tackle</a></div><div class="products"><article class="product"><div class="product-image"></div><div class="product-body"><strong>Maple Cast Hair Jig Pack</strong><div class="price">CA$19.99</div><div class="pay-actions"><a class="quick" href="https://buy.stripe.com/fZu3cvfl8dBa4os2oP6J200" target="_blank" rel="noopener">Card / Stripe</a><a class="quick paypal" href="https://www.paypal.com/ncp/payment/PLEP83D9XY7VY" target="_blank" rel="noopener">PayPal</a></div></div></article><article class="product"><div class="product-image"></div><div class="product-body"><strong>Ice Fishing Starter Set</strong><div class="price">CA$14.99</div><div class="pay-actions"><a class="quick" href="https://buy.stripe.com/fZu8wPgpc1Ss6wA7J96J201" target="_blank" rel="noopener">Card / Stripe</a><a class="quick paypal" href="https://www.paypal.com/ncp/payment/L5PJ4JW5G34UU" target="_blank" rel="noopener">PayPal</a></div></div></article><article class="product"><div class="product-image"></div><div class="product-body"><strong>Micro Lure Panfish Pack</strong><div class="price">CA$9.99</div><div class="pay-actions"><a class="quick" href="https://buy.stripe.com/eVqbJ11uicx66wA0gH6J202" target="_blank" rel="noopener">Card / Stripe</a><a class="quick paypal" href="https://www.paypal.com/ncp/payment/7FHTTSCTCG4H2" target="_blank" rel="noopener">PayPal</a></div></div></article><article class="product"><div class="product-image"></div><div class="product-body"><strong>Metal Spoon Bundle</strong><div class="price">CA$24.99</div><div class="pay-actions"><a class="quick" href="https://buy.stripe.com/4gMeVd8WK8gQ7AE4wX6J203" target="_blank" rel="noopener">Card / Stripe</a><a class="quick paypal" href="https://www.paypal.com/ncp/payment/4V7B52PZBBE8A" target="_blank" rel="noopener">PayPal</a></div></div></article></div></section>
+  <section class="section" id="about"><div class="story"><img src="assets/wrap.jpg" alt="Maple Cast packaging"><div><div class="eyebrow">Quality, performance, reliability</div><h2>Brand trust without slowing the sale</h2><p>Maple Cast presents a clean buying path while still showing the packaging, logo, and product feel customers need to trust the brand.</p><div class="buttons"><a class="btn" href="#about">About Maple Cast</a><a class="btn light" href="#contact">Contact Wholesale</a></div></div></div></section>
+  <section class="section" id="accessories"><div class="section-head"><h2>Quick Questions</h2><a href="#contact">Contact us</a></div><div class="faq"><details open><summary>Which lure should I start with?</summary><p>Start with a featured jig pack or ice fishing starter set if you want a simple setup for testing water clarity, depth, and bite conditions.</p></details><details><summary>Do you sell accessories?</summary><p>Yes. Accessories can include terminal tackle, boxes, hooks, snaps, and other support gear for lure fishing.</p></details><details><summary>Where do products ship from?</summary><p>This area can be updated with your real fulfillment location and shipping policy once the store details are ready.</p></details><details><summary>Can I shop by species?</summary><p>Yes. The homepage can route shoppers by target species, such as bass, pike, trout, crappie, and panfish.</p></details></div></section>
   <footer id="contact">Maple Cast Fishing Tackle | Shop | Ice Fishing | Micro Lures | Metal Lures | Accessories | Contact</footer>
 </body>
 </html>
