@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Maple Cast fishing tackle homepage. Shop vib lures and fishing accessories.">
-  <title>Maple Cast Fishing Tackle</title>
+  <meta name="description" content="Shop Maple Cast vib lures and fishing tackle. Secure checkout, Canada and U.S. shipping, ships from Toronto, Canada.">
+  <link rel="canonical" href="https://www.maplecastshop.com/">
+  <meta property="og:title" content="Maple Cast | Vib Lures & Fishing Tackle">
+  <meta property="og:description" content="Shop Maple Cast vib lures with secure checkout and Canada/U.S. shipping.">
+  <meta property="og:image" content="https://www.maplecastshop.com/assets/logo.jpg">
+  <title>Maple Cast | Vib Lures & Fishing Tackle from Canada</title>
   <style>
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -72,7 +76,7 @@
     nav a:hover { color: #e30613; }
     .hero {
       max-width: 1180px;
-      margin: 26px auto 0;
+      margin: 18px auto 0;
       padding: 0 22px;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -83,7 +87,7 @@
       background: #111;
       color: #fff;
       padding: 44px;
-      min-height: 440px;
+      min-height: 320px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -98,7 +102,7 @@
     }
     .hero-copy h2 {
       margin: 0;
-      font-size: 48px;
+      font-size: 42px;
       line-height: .98;
       text-transform: uppercase;
       letter-spacing: 0;
@@ -133,7 +137,7 @@
       color: #111;
     }
     .hero-image {
-      min-height: 440px;
+      min-height: 320px;
       background-image:
         linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.28)),
         url("assets/pike-hunt.jpg");
@@ -147,6 +151,30 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
+    }
+    .trust-strip {
+      max-width: 1180px;
+      margin: 18px auto 0;
+      padding: 0 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .trust-item {
+      background: #fff;
+      border: 1px solid #dcdcd4;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .trust-item span {
+      display: block;
+      margin-top: 4px;
+      color: #555;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: none;
     }
     .path {
       min-height: 210px;
@@ -266,6 +294,13 @@
       font-size: 17px;
       font-weight: 900;
     }
+    .product-meta {
+      margin: 0 0 12px;
+      color: #555;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
     .variant-row {
       display: grid;
       grid-template-columns: auto 1fr;
@@ -355,6 +390,51 @@
       line-height: 1.6;
     }
     .cart-empty { color: #cfcfc8; }
+    .cart-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+    .cart-line:last-child { border-bottom: 0; }
+    .cart-line strong {
+      display: block;
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .cart-line span {
+      display: block;
+      color: #d9d9d0;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .cart-adjust {
+      display: grid;
+      grid-template-columns: 30px 32px 30px;
+      gap: 4px;
+      align-items: center;
+      justify-items: center;
+    }
+    .cart-adjust button,
+    .remove-item {
+      min-height: 30px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 900;
+    }
+    .cart-adjust button { width: 30px; }
+    .remove-item {
+      grid-column: 1 / -1;
+      width: 100%;
+      color: #f3b338;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
     .cart-actions {
       min-width: 240px;
       display: grid;
@@ -426,6 +506,13 @@
       display: grid;
       place-items: center;
       padding: 0 12px;
+    }
+    .payment-trust {
+      margin: -2px 0 0;
+      color: #d9d9d0;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
     }
     .paypal-checkout {
       min-height: 44px;
@@ -508,8 +595,18 @@
       font-weight: 800;
       text-transform: uppercase;
     }
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: #f3b338;
+      font-size: 12px;
+    }
     @media (max-width: 980px) {
       .shop-paths,
+      .trust-strip,
       .products { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
@@ -517,10 +614,11 @@
       .story,
       .faq { grid-template-columns: 1fr; }
       .hero-copy,
-      .hero-image { min-height: 360px; }
+      .hero-image { min-height: 300px; }
       .cart-box { grid-template-columns: 1fr; }
       .cart-total,
-      .cart-note { text-align: left; }
+      .cart-note,
+      .payment-trust { text-align: left; }
       .cart-actions { min-width: 0; }
     }
     @media (max-width: 560px) {
@@ -530,13 +628,14 @@
       .hero-copy { padding: 30px 24px; }
       .hero-copy h2 { font-size: 34px; }
       .shop-paths,
+      .trust-strip,
       .products { grid-template-columns: 1fr; }
       .section-head { align-items: start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <div class="notice">Simple path to purchase: shop Maple Cast vib lures and accessories</div>
+  <div class="notice">Free shipping over CA$100 | Ships from Toronto, Canada | Secure checkout</div>
   <header>
     <div class="brand-line">
       <img src="assets/logo.jpg" alt="Maple Cast logo">
@@ -544,11 +643,9 @@
       <p>Fishing tackle built for anglers, made to perform</p>
     </div>
     <nav aria-label="Primary navigation">
-      <a href="#">Home</a>
       <a href="#shop">Shop</a>
-      <a href="#vib-lures">Vib Lures</a>
-      <a href="#accessories">Accessories</a>
-      <a href="#about">About</a>
+      <a href="#shipping">Shipping</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -556,15 +653,20 @@
     <div class="hero-copy">
       <div class="eyebrow">New season tackle</div>
       <h2>Pick the right lure faster</h2>
-      <p>Shop a focused Maple Cast lineup built around simple vib lure choices and fishing accessories.</p>
+      <p>Shop a focused Maple Cast vib lure lineup with secure checkout, clear shipping, and fast order details.</p>
       <div class="buttons">
-        <a class="btn" href="#shop">Shop Best Sellers</a>
-        <a class="btn light" href="#vib-lures">Shop Vib Lures</a>
+        <a class="btn" href="#shop">Shop Vib Lures</a>
+        <a class="btn light" href="#shipping">View Shipping</a>
       </div>
     </div>
     <div class="hero-image" aria-label="Fishing new arrivals banner"></div>
   </section>
-  <section class="shop-paths" id="shop">
+  <section class="trust-strip" aria-label="Store promises">
+    <div class="trust-item">Ships from Toronto<span>Canada and U.S. checkout supported</span></div>
+    <div class="trust-item">Secure checkout<span>Credit card via Stripe or PayPal</span></div>
+    <div class="trust-item">Free shipping over CA$100<span>Rates shown before payment</span></div>
+  </section>
+  <section class="shop-paths" aria-label="Featured lure styles">
     <article class="path" id="hot-pink-gold">
       <h3>Hot Pink Gold</h3>
       <p>Bright vib lure profile for flash, vibration, and fast search presentations.</p>
@@ -581,17 +683,18 @@
       <span>Shop black pink blade</span>
     </article>
   </section>
-  <section class="section">
+  <section class="section" id="shop">
     <div class="section-head">
       <h2>Featured Products</h2>
-      <a href="#shop">Shop all tackle</a>
+      <a href="#shipping">View cart</a>
     </div>
     <div class="products">
       <article class="product">
         <div class="product-image"></div>
         <div class="product-body">
-          <strong>Hot Pink Gold</strong>
+          <strong>Hot Pink Gold Vib Lure</strong>
           <div class="price">CA$3.99</div>
+          <p class="product-meta">Bright blade bait for flash, vibration, and fast search presentations.</p>
           <label class="variant-row">Weight
             <select data-variant-for="hot-pink-gold">
               <option value="7g-025oz">7g / 0.25oz</option>
@@ -604,8 +707,9 @@
       <article class="product">
         <div class="product-image"></div>
         <div class="product-body">
-          <strong>Red Pearl Blade</strong>
+          <strong>Red Pearl Blade Vib Lure</strong>
           <div class="price">CA$4.99</div>
+          <p class="product-meta">Red vibration bait for reaction bites and confident coverage.</p>
           <label class="variant-row">Weight
             <select data-variant-for="red-pearl-blade">
               <option value="10g-035oz">10g / 0.35oz</option>
@@ -618,8 +722,9 @@
       <article class="product">
         <div class="product-image"></div>
         <div class="product-body">
-          <strong>Black Pink Blade</strong>
+          <strong>Black Pink Blade Vib Lure</strong>
           <div class="price">CA$3.99</div>
+          <p class="product-meta">High-contrast vib lure built for visibility and aggressive strikes.</p>
           <label class="variant-row">Weight
             <select data-variant-for="black-pink-blade">
               <option value="7g-025oz">7g / 0.25oz</option>
@@ -631,7 +736,7 @@
       </article>
     </div>
   </section>
-  <section class="cart-panel" aria-label="Shopping cart">
+  <section class="cart-panel" id="shipping" aria-label="Shopping cart">
     <div class="cart-box">
       <div>
         <h3>Shopping Cart</h3>
@@ -654,8 +759,9 @@
         <div class="cart-total" id="cartTotal">CA$0.00</div>
         <button class="checkout" id="checkoutButton" type="button" disabled>
           <span class="checkout-brand">Stripe</span>
-          <span class="checkout-label">Checkout</span>
+          <span class="checkout-label">Credit / Debit Card</span>
         </button>
+        <p class="payment-trust">Secure checkout. Full shipping address collected at payment.</p>
         <div class="paypal-checkout" id="paypalButtonContainer"></div>
         <p class="cart-note">Free shipping over CA$100. Under CA$100: Canada CA$9.99, U.S. CA$14.99.</p>
       </div>
@@ -675,7 +781,7 @@
       </div>
     </div>
   </section>
-  <section class="section" id="accessories">
+  <section class="section" id="faq">
     <div class="section-head">
       <h2>Quick Questions</h2>
       <a href="#contact">Contact us</a>
@@ -699,21 +805,29 @@
       </details>
     </div>
   </section>
-  <footer id="contact">Maple Cast Fishing Tackle | Shop | Vib Lures | Accessories | Contact</footer>
+  <footer id="contact">
+    Maple Cast Fishing Tackle | Ships from Toronto, Canada | <a href="mailto:maplecastshop@gmail.com">maplecastshop@gmail.com</a>
+    <div class="footer-links">
+      <a href="#shipping">Shipping Policy</a>
+      <a href="#faq">Refund Policy</a>
+      <a href="#contact">Privacy Policy</a>
+      <a href="#contact">Terms</a>
+    </div>
+  </footer>
   <script>
     const products = {
       "hot-pink-gold": {
-        name: "Hot Pink Gold",
+        name: "Hot Pink Gold Vib Lure",
         price: 399,
         variants: [{ id: "7g-025oz", label: "7g / 0.25oz" }]
       },
       "red-pearl-blade": {
-        name: "Red Pearl Blade",
+        name: "Red Pearl Blade Vib Lure",
         price: 499,
         variants: [{ id: "10g-035oz", label: "10g / 0.35oz" }]
       },
       "black-pink-blade": {
-        name: "Black Pink Blade",
+        name: "Black Pink Blade Vib Lure",
         price: 399,
         variants: [{ id: "7g-025oz", label: "7g / 0.25oz" }]
       }
@@ -736,8 +850,9 @@
     function formatPrice(cents) {
       return new Intl.NumberFormat("en-CA", {
         style: "currency",
-        currency: "CAD"
-      }).format(cents / 100);
+        currency: "CAD",
+        currencyDisplay: "narrowSymbol"
+      }).format(cents / 100).replace("$", "CA$");
     }
 
     function getCartItems() {
@@ -786,7 +901,19 @@
           const variant = product.variants.find((option) => option.id === variantId) || product.variants[0];
           subtotal += product.price * quantity;
           const item = document.createElement("li");
-          item.textContent = `${product.name} - ${variant.label} x ${quantity} - ${formatPrice(product.price * quantity)}`;
+          item.className = "cart-line";
+          item.innerHTML = `
+            <div>
+              <strong>${product.name}</strong>
+              <span>${variant.label} x ${quantity} - ${formatPrice(product.price * quantity)}</span>
+            </div>
+            <div class="cart-adjust" aria-label="Adjust ${product.name}">
+              <button type="button" data-cart-action="decrease" data-cart-key="${key}" aria-label="Decrease ${product.name}">-</button>
+              <span>${quantity}</span>
+              <button type="button" data-cart-action="increase" data-cart-key="${key}" aria-label="Increase ${product.name}">+</button>
+              <button class="remove-item" type="button" data-cart-action="remove" data-cart-key="${key}">Remove</button>
+            </div>
+          `;
           cartItems.appendChild(item);
         });
         checkoutButton.disabled = false;
@@ -809,9 +936,35 @@
       });
     });
 
+    cartItems.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-cart-action]");
+      if (!button) return;
+
+      const key = button.dataset.cartKey;
+      const action = button.dataset.cartAction;
+      const current = cart.get(key) || 0;
+
+      if (action === "increase") {
+        cart.set(key, Math.min(current + 1, 99));
+      }
+      if (action === "decrease") {
+        if (current <= 1) {
+          cart.delete(key);
+        } else {
+          cart.set(key, current - 1);
+        }
+      }
+      if (action === "remove") {
+        cart.delete(key);
+      }
+
+      cartMessage.textContent = cart.size === 0 ? "Cart is empty." : "Cart updated.";
+      renderCart();
+    });
+
     checkoutButton.addEventListener("click", async () => {
       if (cart.size === 0) return;
-      checkoutButton.disabled = true;
+        checkoutButton.disabled = true;
       checkoutButton.innerHTML = '<span class="checkout-brand">Stripe</span><span class="checkout-label">Opening...</span>';
       cartMessage.textContent = "";
       const items = getCartItems();
@@ -829,7 +982,7 @@
       } catch (error) {
         cartMessage.textContent = error.message;
         checkoutButton.disabled = false;
-        checkoutButton.innerHTML = '<span class="checkout-brand">Stripe</span><span class="checkout-label">Checkout</span>';
+        checkoutButton.innerHTML = '<span class="checkout-brand">Stripe</span><span class="checkout-label">Credit / Debit Card</span>';
       }
     });
 
