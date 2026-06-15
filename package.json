@@ -1,0 +1,8 @@
+{
+  "name": "maple-cast",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "stripe": "^18.2.1"
+  }
+}
