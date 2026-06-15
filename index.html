@@ -366,6 +366,36 @@
       font-weight: 900;
       color: #f3b338;
     }
+    .shipping-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .shipping-row select {
+      height: 38px;
+      border: 0;
+      background: #fff;
+      color: #111;
+      padding: 0 10px;
+      font-weight: 900;
+    }
+    .cart-summary {
+      display: grid;
+      gap: 4px;
+      color: #e7e7df;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .cart-summary div {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
     .checkout {
       height: 44px;
       border: 0;
@@ -611,13 +641,23 @@
         <p class="cart-message" id="cartMessage" role="status"></p>
       </div>
       <div class="cart-actions">
+        <label class="shipping-row">Ship to
+          <select id="shippingCountry">
+            <option value="CA">Canada</option>
+            <option value="US">United States</option>
+          </select>
+        </label>
+        <div class="cart-summary">
+          <div><span>Subtotal</span><span id="cartSubtotal">CA$0.00</span></div>
+          <div><span>Shipping</span><span id="cartShipping">CA$0.00</span></div>
+        </div>
         <div class="cart-total" id="cartTotal">CA$0.00</div>
         <button class="checkout" id="checkoutButton" type="button" disabled>
           <span class="checkout-brand">Stripe</span>
           <span class="checkout-label">Checkout</span>
         </button>
         <div class="paypal-checkout" id="paypalButtonContainer"></div>
-        <p class="cart-note">Multiple products combine into one payment. Shipping address is collected at checkout.</p>
+        <p class="cart-note">Free shipping over CA$100. Under CA$100: Canada CA$9.99, U.S. CA$14.99.</p>
       </div>
     </div>
   </section>
@@ -679,10 +719,18 @@
       }
     };
     const cart = new Map();
+    const freeShippingThreshold = 10000;
+    const shippingRates = {
+      CA: 999,
+      US: 1499
+    };
     const cartItems = document.getElementById("cartItems");
+    const cartSubtotal = document.getElementById("cartSubtotal");
+    const cartShipping = document.getElementById("cartShipping");
     const cartTotal = document.getElementById("cartTotal");
     const cartMessage = document.getElementById("cartMessage");
     const checkoutButton = document.getElementById("checkoutButton");
+    const shippingCountry = document.getElementById("shippingCountry");
     const paypalButtonContainer = document.getElementById("paypalButtonContainer");
 
     function formatPrice(cents) {
@@ -697,6 +745,13 @@
         const [id, variantId] = key.split("::");
         return { id, variantId, quantity };
       });
+    }
+
+    function calculateShipping(subtotal) {
+      if (cart.size === 0 || subtotal >= freeShippingThreshold) {
+        return 0;
+      }
+      return shippingRates[shippingCountry.value] || shippingRates.CA;
     }
 
     function getVariant(id) {
@@ -717,7 +772,7 @@
 
     function renderCart() {
       cartItems.innerHTML = "";
-      let total = 0;
+      let subtotal = 0;
       if (cart.size === 0) {
         const item = document.createElement("li");
         item.className = "cart-empty";
@@ -729,14 +784,17 @@
           const [id, variantId] = key.split("::");
           const product = products[id];
           const variant = product.variants.find((option) => option.id === variantId) || product.variants[0];
-          total += product.price * quantity;
+          subtotal += product.price * quantity;
           const item = document.createElement("li");
           item.textContent = `${product.name} - ${variant.label} x ${quantity} - ${formatPrice(product.price * quantity)}`;
           cartItems.appendChild(item);
         });
         checkoutButton.disabled = false;
       }
-      cartTotal.textContent = formatPrice(total);
+      const shipping = calculateShipping(subtotal);
+      cartSubtotal.textContent = formatPrice(subtotal);
+      cartShipping.textContent = shipping === 0 && subtotal >= freeShippingThreshold ? "Free" : formatPrice(shipping);
+      cartTotal.textContent = formatPrice(subtotal + shipping);
     }
 
     document.querySelectorAll(".add-cart").forEach((button) => {
@@ -761,7 +819,7 @@
         const response = await fetch("/api/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items })
+          body: JSON.stringify({ items, shippingCountry: shippingCountry.value })
         });
         const data = await response.json();
         if (!response.ok || !data.url) {
@@ -811,7 +869,7 @@
           const response = await fetch("/api/create-paypal-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ items: getCartItems() })
+            body: JSON.stringify({ items: getCartItems(), shippingCountry: shippingCountry.value })
           });
           const data = await response.json();
           if (!response.ok || !data.id) {
@@ -840,6 +898,7 @@
     }
 
     renderCart();
+    shippingCountry.addEventListener("change", renderCart);
     loadPayPalCheckout();
   </script>
 </body>
