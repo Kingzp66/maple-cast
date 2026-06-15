@@ -277,6 +277,24 @@
       text-transform: uppercase;
     }
     .pay-actions { display: grid; }
+    .quantity-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .quantity-row input {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #cfcfc8;
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
     .add-cart {
       width: 100%;
       height: 38px;
@@ -338,6 +356,10 @@
       font-size: 13px;
       font-weight: 900;
       text-transform: uppercase;
+    }
+    .paypal-checkout {
+      min-height: 44px;
+      background: #fff;
     }
     .checkout:disabled,
     .add-cart:disabled {
@@ -497,15 +519,15 @@
     <div class="products">
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Hot Pink Gold</strong><div class="price">CA$3.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="hot-pink-gold">Add to cart</button></div></div>
+        <div class="product-body"><strong>Hot Pink Gold</strong><div class="price">CA$3.99</div><label class="quantity-row">Qty <input class="quantity-input" type="number" min="1" max="99" value="1" inputmode="numeric" data-quantity-for="hot-pink-gold"></label><div class="pay-actions"><button class="add-cart" type="button" data-product-id="hot-pink-gold">Add to cart</button></div></div>
       </article>
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Red Pearl Blade</strong><div class="price">CA$4.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="red-pearl-blade">Add to cart</button></div></div>
+        <div class="product-body"><strong>Red Pearl Blade</strong><div class="price">CA$4.99</div><label class="quantity-row">Qty <input class="quantity-input" type="number" min="1" max="99" value="1" inputmode="numeric" data-quantity-for="red-pearl-blade"></label><div class="pay-actions"><button class="add-cart" type="button" data-product-id="red-pearl-blade">Add to cart</button></div></div>
       </article>
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Black Pink Blade</strong><div class="price">CA$3.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="black-pink-blade">Add to cart</button></div></div>
+        <div class="product-body"><strong>Black Pink Blade</strong><div class="price">CA$3.99</div><label class="quantity-row">Qty <input class="quantity-input" type="number" min="1" max="99" value="1" inputmode="numeric" data-quantity-for="black-pink-blade"></label><div class="pay-actions"><button class="add-cart" type="button" data-product-id="black-pink-blade">Add to cart</button></div></div>
       </article>
     </div>
   </section>
@@ -521,6 +543,7 @@
       <div class="cart-actions">
         <div class="cart-total" id="cartTotal">CA$0.00</div>
         <button class="checkout" id="checkoutButton" type="button" disabled>Checkout with Stripe</button>
+        <div class="paypal-checkout" id="paypalButtonContainer"></div>
         <p class="cart-note">Multiple products combine into one payment. Shipping address is collected at checkout.</p>
       </div>
     </div>
@@ -575,12 +598,26 @@
     const cartTotal = document.getElementById("cartTotal");
     const cartMessage = document.getElementById("cartMessage");
     const checkoutButton = document.getElementById("checkoutButton");
+    const paypalButtonContainer = document.getElementById("paypalButtonContainer");
 
     function formatPrice(cents) {
       return new Intl.NumberFormat("en-CA", {
         style: "currency",
         currency: "CAD"
       }).format(cents / 100);
+    }
+
+    function getCartItems() {
+      return Array.from(cart, ([id, quantity]) => ({ id, quantity }));
+    }
+
+    function getQuantity(id) {
+      const input = document.querySelector(`[data-quantity-for="${id}"]`);
+      const quantity = Number(input?.value || 1);
+      if (!Number.isInteger(quantity) || quantity < 1) {
+        return 1;
+      }
+      return Math.min(quantity, 99);
     }
 
     function renderCart() {
@@ -608,8 +645,9 @@
     document.querySelectorAll(".add-cart").forEach((button) => {
       button.addEventListener("click", () => {
         const id = button.dataset.productId;
-        cart.set(id, (cart.get(id) || 0) + 1);
-        cartMessage.textContent = `${products[id].name} added to cart.`;
+        const quantity = getQuantity(id);
+        cart.set(id, (cart.get(id) || 0) + quantity);
+        cartMessage.textContent = `${quantity} x ${products[id].name} added to cart.`;
         renderCart();
       });
     });
@@ -619,7 +657,7 @@
       checkoutButton.disabled = true;
       checkoutButton.textContent = "Opening checkout...";
       cartMessage.textContent = "";
-      const items = Array.from(cart, ([id, quantity]) => ({ id, quantity }));
+      const items = getCartItems();
       try {
         const response = await fetch("/api/create-checkout-session", {
           method: "POST",
@@ -638,7 +676,72 @@
       }
     });
 
+    async function loadPayPalCheckout() {
+      try {
+        const response = await fetch("/api/paypal-client-id");
+        const data = await response.json();
+        if (!response.ok || !data.clientId) {
+          throw new Error(data.error || "PayPal is not configured yet.");
+        }
+        const script = document.createElement("script");
+        script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(data.clientId)}&currency=CAD&intent=capture`;
+        script.onload = renderPayPalButton;
+        script.onerror = () => {
+          cartMessage.textContent = "PayPal checkout could not load.";
+        };
+        document.head.appendChild(script);
+      } catch (error) {
+        paypalButtonContainer.textContent = "PayPal checkout unavailable";
+      }
+    }
+
+    function renderPayPalButton() {
+      if (!window.paypal) return;
+      window.paypal.Buttons({
+        style: {
+          layout: "vertical",
+          color: "gold",
+          shape: "rect",
+          label: "paypal"
+        },
+        createOrder: async () => {
+          if (cart.size === 0) {
+            throw new Error("Cart is empty.");
+          }
+          cartMessage.textContent = "";
+          const response = await fetch("/api/create-paypal-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: getCartItems() })
+          });
+          const data = await response.json();
+          if (!response.ok || !data.id) {
+            throw new Error(data.error || "PayPal checkout is unavailable.");
+          }
+          return data.id;
+        },
+        onApprove: async (data) => {
+          const response = await fetch("/api/capture-paypal-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderId: data.orderID })
+          });
+          const capture = await response.json();
+          if (!response.ok) {
+            throw new Error(capture.error || "PayPal payment could not be captured.");
+          }
+          cart.clear();
+          cartMessage.textContent = "PayPal payment received. Thank you.";
+          renderCart();
+        },
+        onError: (error) => {
+          cartMessage.textContent = error.message || "PayPal checkout failed.";
+        }
+      }).render("#paypalButtonContainer");
+    }
+
     renderCart();
+    loadPayPalCheckout();
   </script>
 </body>
 </html>
