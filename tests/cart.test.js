@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
   catalog,
+  calculateShipping,
   createLineItems,
   createPayPalPurchaseUnit
 } = require("../api/_cart");
@@ -31,9 +32,9 @@ test("createLineItems builds Stripe checkout items from cart quantities and weig
   const items = createLineItems([
     { id: "hot-pink-gold", variantId: "7g-025oz", quantity: 2 },
     { id: "red-pearl-blade", variantId: "10g-035oz", quantity: 1 }
-  ]);
+  ], "CA");
 
-  assert.equal(items.length, 2);
+  assert.equal(items.length, 3);
   assert.equal(items[0].quantity, 2);
   assert.equal(items[0].price_data.unit_amount, 399);
   assert.equal(items[0].price_data.product_data.description, "Weight: 7g / 0.25oz");
@@ -46,16 +47,28 @@ test("createLineItems builds Stripe checkout items from cart quantities and weig
   assert.equal(items[1].quantity, 1);
   assert.equal(items[1].price_data.unit_amount, 499);
   assert.equal(items[1].price_data.product_data.description, "Weight: 10g / 0.35oz");
+  assert.equal(items[2].quantity, 1);
+  assert.equal(items[2].price_data.unit_amount, 999);
+  assert.equal(items[2].price_data.product_data.name, "Shipping to Canada");
 });
 
-test("createPayPalPurchaseUnit builds an itemized CAD purchase unit with weight variants", () => {
+test("calculateShipping applies country rates and free shipping threshold", () => {
+  assert.equal(calculateShipping(1197, "CA").amount, 999);
+  assert.equal(calculateShipping(1197, "US").amount, 1499);
+  assert.equal(calculateShipping(10000, "CA").amount, 0);
+  assert.equal(calculateShipping(10000, "US").amount, 0);
+  assert.throws(() => calculateShipping(1197, "GB"), /Invalid shipping country/);
+});
+
+test("createPayPalPurchaseUnit builds an itemized CAD purchase unit with shipping", () => {
   const purchaseUnit = createPayPalPurchaseUnit([
     { id: "hot-pink-gold", variantId: "7g-025oz", quantity: 2 },
     { id: "black-pink-blade", variantId: "7g-025oz", quantity: 1 }
-  ]);
+  ], "US");
 
-  assert.equal(purchaseUnit.amount.value, "11.97");
+  assert.equal(purchaseUnit.amount.value, "26.96");
   assert.equal(purchaseUnit.amount.breakdown.item_total.value, "11.97");
+  assert.equal(purchaseUnit.amount.breakdown.shipping.value, "14.99");
   assert.deepEqual(
     purchaseUnit.items.map((item) => ({
       name: item.name,
@@ -95,5 +108,9 @@ test("cart builders reject inactive products", () => {
   assert.throws(
     () => createLineItems([{ id: "hot-pink-gold", variantId: "10g-035oz", quantity: 1 }]),
     /Invalid cart item/
+  );
+  assert.throws(
+    () => createPayPalPurchaseUnit([{ id: "hot-pink-gold", variantId: "7g-025oz", quantity: 1 }], "GB"),
+    /Invalid shipping country/
   );
 });
