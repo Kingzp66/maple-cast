@@ -1,21 +1,17 @@
 const Stripe = require("stripe");
 
 const catalog = {
-  "hair-jig-pack": {
-    name: "Maple Cast Hair Jig Pack",
-    unitAmount: 1999
+  "hot-pink-gold": {
+    name: "Hot Pink Gold",
+    unitAmount: 399
   },
-  "red-vib-lure": {
-    name: "Maple Cast Red Vib Lure",
-    unitAmount: 1499
+  "red-pearl-blade": {
+    name: "Red Pearl Blade",
+    unitAmount: 499
   },
-  "micro-lure-pack": {
-    name: "Micro Lure Panfish Pack",
-    unitAmount: 999
-  },
-  "black-red-vib-bundle": {
-    name: "Black Red Vib & Metal Bundle",
-    unitAmount: 2499
+  "black-pink-blade": {
+    name: "Black Pink Blade",
+    unitAmount: 399
   }
 };
 
