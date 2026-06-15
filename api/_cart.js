@@ -3,15 +3,24 @@ const currency = "cad";
 const catalog = {
   "hot-pink-gold": {
     name: "Hot Pink Gold",
-    unitAmount: 399
+    unitAmount: 399,
+    variants: [
+      { id: "7g-025oz", label: "7g / 0.25oz", grams: 7, ounces: 0.25 }
+    ]
   },
   "red-pearl-blade": {
     name: "Red Pearl Blade",
-    unitAmount: 499
+    unitAmount: 499,
+    variants: [
+      { id: "10g-035oz", label: "10g / 0.35oz", grams: 10, ounces: 0.35 }
+    ]
   },
   "black-pink-blade": {
     name: "Black Pink Blade",
-    unitAmount: 399
+    unitAmount: 399,
+    variants: [
+      { id: "7g-025oz", label: "7g / 0.25oz", grams: 7, ounces: 0.25 }
+    ]
   }
 };
 
@@ -22,13 +31,15 @@ function normalizeItems(items) {
 
   return items.map((item) => {
     const product = catalog[item.id];
+    const variantId = item.variantId || product?.variants?.[0]?.id;
+    const variant = product?.variants.find((option) => option.id === variantId);
     const quantity = Number(item.quantity);
 
-    if (!product || !Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+    if (!product || !variant || !Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
       throw new Error("Invalid cart item.");
     }
 
-    return { id: item.id, product, quantity };
+    return { id: item.id, product, variant, quantity };
   });
 }
 
@@ -37,13 +48,20 @@ function formatAmount(cents) {
 }
 
 function createLineItems(items) {
-  return normalizeItems(items).map(({ product, quantity }) => ({
+  return normalizeItems(items).map(({ id, product, variant, quantity }) => ({
     quantity,
     price_data: {
       currency,
       unit_amount: product.unitAmount,
       product_data: {
-        name: product.name
+        name: product.name,
+        description: `Weight: ${variant.label}`,
+        metadata: {
+          product_id: id,
+          variant_id: variant.id,
+          weight_grams: String(variant.grams),
+          weight_ounces: String(variant.ounces)
+        }
       }
     }
   }));
@@ -67,8 +85,10 @@ function createPayPalPurchaseUnit(items) {
         }
       }
     },
-    items: normalized.map(({ product, quantity }) => ({
+    items: normalized.map(({ id, product, variant, quantity }) => ({
       name: product.name,
+      description: `Weight: ${variant.label}`,
+      sku: `${id}-${variant.id}`,
       quantity: String(quantity),
       unit_amount: {
         currency_code: "CAD",
