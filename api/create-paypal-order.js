@@ -9,7 +9,7 @@ module.exports = async function handler(request, response) {
 
   try {
     const items = Array.isArray(request.body?.items) ? request.body.items : [];
-    const purchaseUnit = createPayPalPurchaseUnit(items);
+    const purchaseUnit = createPayPalPurchaseUnit(items, request.body?.shippingCountry);
 
     if (purchaseUnit.items.length === 0) {
       return response.status(400).json({ error: "Cart is empty." });
