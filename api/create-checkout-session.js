@@ -1,19 +1,5 @@
 const Stripe = require("stripe");
-
-const catalog = {
-  "hot-pink-gold": {
-    name: "Hot Pink Gold",
-    unitAmount: 399
-  },
-  "red-pearl-blade": {
-    name: "Red Pearl Blade",
-    unitAmount: 499
-  },
-  "black-pink-blade": {
-    name: "Black Pink Blade",
-    unitAmount: 399
-  }
-};
+const { createLineItems } = require("./_cart");
 
 module.exports = async function handler(request, response) {
   if (request.method !== "POST") {
@@ -28,25 +14,7 @@ module.exports = async function handler(request, response) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const items = Array.isArray(request.body?.items) ? request.body.items : [];
-    const lineItems = items.map((item) => {
-      const product = catalog[item.id];
-      const quantity = Number(item.quantity);
-
-      if (!product || !Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
-        throw new Error("Invalid cart item.");
-      }
-
-      return {
-        quantity,
-        price_data: {
-          currency: "cad",
-          unit_amount: product.unitAmount,
-          product_data: {
-            name: product.name
-          }
-        }
-      };
-    });
+    const lineItems = createLineItems(items);
 
     if (lineItems.length === 0) {
       return response.status(400).json({ error: "Cart is empty." });
