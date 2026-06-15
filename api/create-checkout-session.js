@@ -14,7 +14,7 @@ module.exports = async function handler(request, response) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const items = Array.isArray(request.body?.items) ? request.body.items : [];
-    const lineItems = createLineItems(items);
+    const lineItems = createLineItems(items, request.body?.shippingCountry);
 
     if (lineItems.length === 0) {
       return response.status(400).json({ error: "Cart is empty." });
