@@ -1,4 +1,9 @@
 const currency = "cad";
+const freeShippingThreshold = 10000;
+const shippingRates = {
+  CA: { amount: 999, label: "Canada" },
+  US: { amount: 1499, label: "United States" }
+};
 
 const catalog = {
   "hot-pink-gold": {
@@ -47,7 +52,33 @@ function formatAmount(cents) {
   return (cents / 100).toFixed(2);
 }
 
-function createLineItems(items) {
+function calculateSubtotal(items) {
+  return normalizeItems(items).reduce(
+    (sum, { product, quantity }) => sum + product.unitAmount * quantity,
+    0
+  );
+}
+
+function normalizeShippingCountry(country) {
+  const normalized = String(country || "CA").toUpperCase();
+  if (!shippingRates[normalized]) {
+    throw new Error("Invalid shipping country.");
+  }
+  return normalized;
+}
+
+function calculateShipping(subtotal, country) {
+  const shippingCountry = normalizeShippingCountry(country);
+  const rate = shippingRates[shippingCountry];
+
+  if (subtotal >= freeShippingThreshold) {
+    return { country: shippingCountry, label: rate.label, amount: 0 };
+  }
+
+  return { country: shippingCountry, label: rate.label, amount: rate.amount };
+}
+
+function createProductLineItems(items) {
   return normalizeItems(items).map(({ id, product, variant, quantity }) => ({
     quantity,
     price_data: {
@@ -67,21 +98,52 @@ function createLineItems(items) {
   }));
 }
 
-function createPayPalPurchaseUnit(items) {
+function createLineItems(items, shippingCountry = "CA") {
+  const productLineItems = createProductLineItems(items);
+  const subtotal = calculateSubtotal(items);
+  const shipping = calculateShipping(subtotal, shippingCountry);
+
+  if (shipping.amount === 0) {
+    return productLineItems;
+  }
+
+  return [
+    ...productLineItems,
+    {
+      quantity: 1,
+      price_data: {
+        currency,
+        unit_amount: shipping.amount,
+        product_data: {
+          name: `Shipping to ${shipping.label}`,
+          description: "Free shipping on orders over CA$100"
+        }
+      }
+    }
+  ];
+}
+
+function createPayPalPurchaseUnit(items, shippingCountry = "CA") {
   const normalized = normalizeItems(items);
   const total = normalized.reduce(
     (sum, { product, quantity }) => sum + product.unitAmount * quantity,
     0
   );
+  const shipping = calculateShipping(total, shippingCountry);
+  const orderTotal = total + shipping.amount;
 
   return {
     amount: {
       currency_code: "CAD",
-      value: formatAmount(total),
+      value: formatAmount(orderTotal),
       breakdown: {
         item_total: {
           currency_code: "CAD",
           value: formatAmount(total)
+        },
+        shipping: {
+          currency_code: "CAD",
+          value: formatAmount(shipping.amount)
         }
       }
     },
@@ -99,6 +161,7 @@ function createPayPalPurchaseUnit(items) {
 }
 
 module.exports = {
+  calculateShipping,
   catalog,
   createLineItems,
   createPayPalPurchaseUnit,
