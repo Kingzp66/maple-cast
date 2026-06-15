@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Maple Cast fishing tackle homepage. Shop jigs, vib lures, micro lures, metal lures, and fishing accessories.">
+  <meta name="description" content="Maple Cast fishing tackle homepage. Shop vib lures and fishing accessories.">
   <title>Maple Cast Fishing Tackle</title>
   <style>
     * { box-sizing: border-box; }
@@ -145,7 +145,7 @@
       margin: 22px auto 0;
       padding: 0 22px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
     .path {
@@ -167,10 +167,9 @@
       background-size: cover;
       background-position: center;
     }
-    .path:nth-child(1)::before { background-image: url("assets/bass-chase.jpg"); }
+    .path:nth-child(1)::before { background-image: url("assets/vib-pink-small.jpg"); }
     .path:nth-child(2)::before { background-image: url("assets/vib-red-small.jpg"); }
-    .path:nth-child(3)::before { background-image: url("assets/trout-current.jpg"); }
-    .path:nth-child(4)::before { background-image: url("assets/crappie-fever.jpg"); }
+    .path:nth-child(3)::before { background-image: url("assets/vib-black-red-small.jpg"); }
     .path h3,
     .path p,
     .path span {
@@ -224,7 +223,7 @@
     }
     .products {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
     .product {
@@ -233,9 +232,11 @@
     }
     .product-image {
       min-height: 185px;
-      background-image: url("assets/product-jigs.jpg");
-      background-size: cover;
-      background-position: 42% center;
+      background-image: url("assets/vib-pink-small.jpg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-color: #f6f6f1;
+      background-position: center;
     }
     .product:nth-child(2) .product-image {
       background-image: url("assets/vib-red-small.jpg");
@@ -244,8 +245,7 @@
       background-color: #f6f6f1;
       background-position: center;
     }
-    .product:nth-child(3) .product-image { background-position: 50% center; }
-    .product:nth-child(4) .product-image {
+    .product:nth-child(3) .product-image {
       background-image: url("assets/vib-black-red-small.jpg");
       background-size: contain;
       background-repeat: no-repeat;
@@ -276,16 +276,7 @@
       font-weight: 900;
       text-transform: uppercase;
     }
-    .pay-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .quick.paypal {
-      background: #fff;
-      color: #111;
-      border: 1px solid #111;
-    }
+    .pay-actions { display: grid; }
     .add-cart {
       width: 100%;
       height: 38px;
@@ -453,7 +444,7 @@
   </style>
 </head>
 <body>
-  <div class="notice">Simple path to purchase: shop jigs, vib lures, micro lures, metal lures, and accessories</div>
+  <div class="notice">Simple path to purchase: shop Maple Cast vib lures and accessories</div>
   <header>
     <div class="brand-line">
       <img src="assets/logo.jpg" alt="Maple Cast logo">
@@ -463,10 +454,7 @@
     <nav aria-label="Primary navigation">
       <a href="#">Home</a>
       <a href="#shop">Shop</a>
-      <a href="#jigs">Jigs</a>
       <a href="#vib-lures">Vib Lures</a>
-      <a href="#micro-lures">Micro Lures</a>
-      <a href="#metal-lures">Metal Lures</a>
       <a href="#accessories">Accessories</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
@@ -476,7 +464,7 @@
     <div class="hero-copy">
       <div class="eyebrow">New season tackle</div>
       <h2>Pick the right lure faster</h2>
-      <p>Shop a focused Maple Cast lineup built around clear buying paths: jigs, vib lures, micro lures, metal lures, and fishing accessories.</p>
+      <p>Shop a focused Maple Cast lineup built around simple vib lure choices and fishing accessories.</p>
       <div class="buttons">
         <a class="btn" href="#shop">Shop Best Sellers</a>
         <a class="btn light" href="#vib-lures">Shop Vib Lures</a>
@@ -485,25 +473,20 @@
     <div class="hero-image" aria-label="Fishing new arrivals banner"></div>
   </section>
   <section class="shop-paths" id="shop">
-    <article class="path" id="jigs">
-      <h3>Jigs</h3>
-      <p>Cold water and finesse-ready profiles for bass, pike, and multi-species fishing.</p>
-      <span>Shop jigs</span>
+    <article class="path" id="hot-pink-gold">
+      <h3>Hot Pink Gold</h3>
+      <p>Bright vib lure profile for flash, vibration, and fast search presentations.</p>
+      <span>Shop hot pink gold</span>
     </article>
     <article class="path" id="vib-lures">
-      <h3>Vib Lures</h3>
-      <p>Vibration baits for fast search, active fish, and covering water with confidence.</p>
-      <span>Shop vib lures</span>
+      <h3>Red Pearl Blade</h3>
+      <p>Red vibration bait for active fish, reaction bites, and confident coverage.</p>
+      <span>Shop red pearl blade</span>
     </article>
-    <article class="path" id="micro-lures">
-      <h3>Micro Lures</h3>
-      <p>Small presentations for crappie, panfish, trout, and tough bite conditions.</p>
-      <span>Shop micro lures</span>
-    </article>
-    <article class="path" id="metal-lures">
-      <h3>Metal Lures</h3>
-      <p>Spoons, blades, and metal bait profiles for flash, vibration, and reaction bites.</p>
-      <span>Shop metal lures</span>
+    <article class="path" id="black-pink-blade">
+      <h3>Black Pink Blade</h3>
+      <p>High-contrast vib lure built for visibility, vibration, and aggressive strikes.</p>
+      <span>Shop black pink blade</span>
     </article>
   </section>
   <section class="section">
@@ -514,19 +497,15 @@
     <div class="products">
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Maple Cast Hair Jig Pack</strong><div class="price">CA$19.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="hair-jig-pack">Add to cart</button><a class="quick paypal" href="https://www.paypal.com/ncp/payment/PLEP83D9XY7VY" target="_blank" rel="noopener">PayPal</a></div></div>
+        <div class="product-body"><strong>Hot Pink Gold</strong><div class="price">CA$3.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="hot-pink-gold">Add to cart</button></div></div>
       </article>
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Maple Cast Red Vib Lure</strong><div class="price">CA$14.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="red-vib-lure">Add to cart</button><a class="quick paypal" href="https://www.paypal.com/ncp/payment/L5PJ4JW5G34UU" target="_blank" rel="noopener">PayPal</a></div></div>
+        <div class="product-body"><strong>Red Pearl Blade</strong><div class="price">CA$4.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="red-pearl-blade">Add to cart</button></div></div>
       </article>
       <article class="product">
         <div class="product-image"></div>
-        <div class="product-body"><strong>Micro Lure Panfish Pack</strong><div class="price">CA$9.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="micro-lure-pack">Add to cart</button><a class="quick paypal" href="https://www.paypal.com/ncp/payment/7FHTTSCTCG4H2" target="_blank" rel="noopener">PayPal</a></div></div>
-      </article>
-      <article class="product">
-        <div class="product-image"></div>
-        <div class="product-body"><strong>Black Red Vib & Metal Bundle</strong><div class="price">CA$24.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="black-red-vib-bundle">Add to cart</button><a class="quick paypal" href="https://www.paypal.com/ncp/payment/4V7B52PZBBE8A" target="_blank" rel="noopener">PayPal</a></div></div>
+        <div class="product-body"><strong>Black Pink Blade</strong><div class="price">CA$3.99</div><div class="pay-actions"><button class="add-cart" type="button" data-product-id="black-pink-blade">Add to cart</button></div></div>
       </article>
     </div>
   </section>
@@ -535,7 +514,7 @@
       <div>
         <h3>Shopping Cart</h3>
         <ul class="cart-items" id="cartItems">
-          <li class="cart-empty">Cart is empty. Add jig, vib, micro, or metal lures above.</li>
+          <li class="cart-empty">Cart is empty. Add vib lures above.</li>
         </ul>
         <p class="cart-message" id="cartMessage" role="status"></p>
       </div>
@@ -584,13 +563,12 @@
       </details>
     </div>
   </section>
-  <footer id="contact">Maple Cast Fishing Tackle | Shop | Jigs | Vib Lures | Micro Lures | Metal Lures | Accessories | Contact</footer>
+  <footer id="contact">Maple Cast Fishing Tackle | Shop | Vib Lures | Accessories | Contact</footer>
   <script>
     const products = {
-      "hair-jig-pack": { name: "Maple Cast Hair Jig Pack", price: 1999 },
-      "red-vib-lure": { name: "Maple Cast Red Vib Lure", price: 1499 },
-      "micro-lure-pack": { name: "Micro Lure Panfish Pack", price: 999 },
-      "black-red-vib-bundle": { name: "Black Red Vib & Metal Bundle", price: 2499 }
+      "hot-pink-gold": { name: "Hot Pink Gold", price: 399 },
+      "red-pearl-blade": { name: "Red Pearl Blade", price: 499 },
+      "black-pink-blade": { name: "Black Pink Blade", price: 399 }
     };
     const cart = new Map();
     const cartItems = document.getElementById("cartItems");
@@ -611,7 +589,7 @@
       if (cart.size === 0) {
         const item = document.createElement("li");
         item.className = "cart-empty";
-        item.textContent = "Cart is empty. Add jig, vib, micro, or metal lures above.";
+        item.textContent = "Cart is empty. Add vib lures above.";
         cartItems.appendChild(item);
         checkoutButton.disabled = true;
       } else {
