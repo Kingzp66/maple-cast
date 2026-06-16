@@ -26,6 +26,14 @@ test("homepage includes trust and policy links", () => {
   assert.match(html, /mailto:/);
 });
 
+test("homepage includes Maple Cast social media links", () => {
+  assert.match(html, /Follow Maple Cast/);
+  assert.match(html, /https:\/\/www\.facebook\.com\/profile\.php\?id=61590931259116/);
+  assert.match(html, /https:\/\/www\.youtube\.com\/channel\/UCnjq52eG7qzNP3q93ayVaNg/);
+  assert.match(html, /https:\/\/www\.instagram\.com\/maplecastshop\//);
+  assert.match(html, /https:\/\/www\.tiktok\.com\/@maple\.cast/);
+});
+
 test("customer-facing prices consistently show CAD", () => {
   assert.match(html, /currencyDisplay: "narrowSymbol"/);
   assert.match(html, /replace\("\$", "CA\$"\)/);
