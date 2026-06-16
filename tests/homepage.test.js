@@ -28,6 +28,11 @@ test("homepage includes trust and policy links", () => {
 
 test("homepage includes Maple Cast social media links", () => {
   assert.match(html, /Follow Maple Cast/);
+  assert.match(html, /class="social-button facebook"/);
+  assert.match(html, /aria-label="Follow Maple Cast on Facebook"/);
+  assert.match(html, /aria-label="Watch Maple Cast on YouTube"/);
+  assert.match(html, /aria-label="Follow Maple Cast on Instagram"/);
+  assert.match(html, /aria-label="Follow Maple Cast on TikTok"/);
   assert.match(html, /https:\/\/www\.facebook\.com\/profile\.php\?id=61590931259116/);
   assert.match(html, /https:\/\/www\.youtube\.com\/channel\/UCnjq52eG7qzNP3q93ayVaNg/);
   assert.match(html, /https:\/\/www\.instagram\.com\/maplecastshop\//);
